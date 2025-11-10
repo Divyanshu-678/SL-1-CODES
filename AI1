@@ -1,0 +1,67 @@
+class Graph:
+    def __init__(self):
+        self.graph = {}
+
+    # ----------------- Add Edge (Undirected) -----------------
+    def addEdge(self, u, v):
+        # Add edge u → v
+        if u not in self.graph:
+            self.graph[u] = []
+        self.graph[u].append(v)
+
+        # Add edge v → u
+        if v not in self.graph:
+            self.graph[v] = []
+        self.graph[v].append(u)
+
+    # ----------------- BFS -----------------
+    def BFS(self, start):
+        visited = {node: False for node in self.graph}  # All nodes initially unvisited
+        queue = [start]
+        visited[start] = True
+
+        print("\nBreadth First Traversal:", end=" ")
+
+        while queue:
+            s = queue.pop(0)
+            print(s, end=" ")
+
+            for neighbour in self.graph.get(s, []):
+                if not visited[neighbour]:
+                    queue.append(neighbour)
+                    visited[neighbour] = True
+
+    # ----------------- DFS -----------------
+    def DFSUtil(self, v, visited):
+        visited[v] = True
+        print(v, end=" ")
+
+        for neighbour in self.graph.get(v, []):
+            if not visited[neighbour]:
+                self.DFSUtil(neighbour, visited)
+
+    def DFS(self, start):
+        visited = {node: False for node in self.graph}
+        print("\nDepth First Traversal:", end=" ")
+        self.DFSUtil(start, visited)
+
+
+# ----------------- MAIN PROGRAM -----------------
+if __name__ == "__main__":
+    g = Graph()
+
+    num_edges = int(input("Enter number of edges: "))
+    print("Enter edges (u v):")
+    for i in range(num_edges):
+        u, v = map(int, input().split())
+        g.addEdge(u, v)
+
+    start_node = int(input("Enter starting node: "))
+    choice = input("Enter traversal type (BFS/DFS): ").strip().upper()
+
+    if choice == "BFS":
+        g.BFS(start_node)
+    elif choice == "DFS":
+        g.DFS(start_node)
+    else:
+        print("Invalid choice. Please enter BFS or DFS.")
