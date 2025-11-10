@@ -1,0 +1,72 @@
+  import mysql.connector
+
+# Connect to MySQL
+con = mysql.connector.connect(
+    host="localhost",
+    user="root",
+    password="",        # enter your MySQL password
+    database="studentdb"
+)
+
+cur = con.cursor()
+
+# Menu
+while True:
+    print("\n1. Add Student")
+    print("2. View Students")
+    print("3. Update Student")
+    print("4. Delete Student")
+    print("5. Exit")
+
+    ch = input("Enter your choice: ")
+
+    if ch == '1':
+        name = input("Enter name: ")
+        age = input("Enter age: ")
+        course = input("Enter course: ")
+        cur.execute("INSERT INTO students (name, age, course) VALUES (%s, %s, %s)", (name, age, course))
+        con.commit()
+        print("Student Added Successfully!")
+
+    elif ch == '2':
+        cur.execute("SELECT * FROM students")
+        for row in cur.fetchall():
+            print(row)
+
+    elif ch == '3':
+        id = input("Enter student ID to update: ")
+        name = input("Enter new name: ")
+        age = input("Enter new age: ")
+        course = input("Enter new course: ")
+        cur.execute("UPDATE students SET name=%s, age=%s, course=%s WHERE id=%s", (name, age, course, id))
+        con.commit()
+        print("Student Updated Successfully!")
+
+    elif ch == '4':
+        id = input("Enter student ID to delete: ")
+        cur.execute("DELETE FROM students WHERE id=%s", (id,))
+        con.commit()
+        print("Student Deleted Successfully!")
+
+    elif ch == '5':
+        print("Exiting...")
+        break
+
+    else:
+        print("Invalid choice!")
+
+# Close connection
+cur.close()
+con.close()
+
+MYSQL
+
+CREATE DATABASE studentdb;
+USE studentdb;
+
+CREATE TABLE students (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50),
+    age INT,
+    course VARCHAR(50)
+);
