@@ -1,0 +1,19 @@
+print("Hello! Welcome to ShopEase Customer Support.")
+print("Type 'bye' anytime to exit.\n")
+
+while True:
+    user_input = input("You: ").lower()
+
+    if "order" in user_input:
+        print("Chatbot: Please check your order status under 'My Orders' on our website.")
+    elif "return" in user_input or "refund" in user_input:
+        print("Chatbot: You can return items within 30 days of delivery.")
+    elif "store hours" in user_input or "open" in user_input:
+        print("Chatbot: We’re open Monday to Saturday, 9 AM to 9 PM.")
+    elif "contact" in user_input or "help" in user_input:
+        print("Chatbot: Contact us at support@shopease.com or call 1800-123-456.")
+    elif "bye" in user_input or "exit" in user_input:
+        print("Chatbot: Goodbye! Have a great day!")
+        break
+    else:
+        print("Chatbot: Sorry, I didn’t understand that. Please try again.")
