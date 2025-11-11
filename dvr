@@ -1,0 +1,36 @@
+n = int(input("Enter number of routers: "))
+
+# Initialize distance matrix
+print("Enter the cost matrix (use 999 for infinity):")
+cost = []
+for i in range(n):
+    row = list(map(int, input().split()))
+    cost.append(row)
+
+# Initialize distance and next-hop tables
+dist = [[0 for _ in range(n)] for _ in range(n)]
+for i in range(n):
+    for j in range(n):
+        dist[i][j] = cost[i][j]
+
+# Distance Vector Algorithm (Bellman-Ford)
+for k in range(n):
+    for i in range(n):
+        for j in range(n):
+            if dist[i][j] > dist[i][k] + dist[k][j]:
+                dist[i][j] = dist[i][k] + dist[k][j]
+
+# Display final routing table
+print("\n--- Final Distance Vector Table ---")
+for i in range(n):
+    print(f"Router {i+1} routing table:")
+    for j in range(n):
+        if dist[i][j] == 999:
+            print(f"To node {j+1}: ∞")
+        else:
+            print(f"To node {j+1}: {dist[i][j]}")
+ print()
+
+
+
+  
